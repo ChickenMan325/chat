@@ -32,7 +32,7 @@ class Config:
             app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(days=cls.JWT_ACCESS_TOKEN_EXPIRES_DAYS)
             app.config['JSON_SORT_KEYS'] = False
             app.config['JWT_TOKEN_LOCATION'] = ['headers', 'cookies']
-            app.config['JWT_COOKIE_SECURE'] = True
+            app.config['JWT_COOKIE_SECURE'] = app.env != 'development' # Changed to be conditional
             app.config['JWT_COOKIE_CSRF_PROTECT'] = True
             app.config['JWT_COOKIE_SAMESITE'] = 'Lax'
             app.config['JWT_COOKIE_PATH'] = '/'
