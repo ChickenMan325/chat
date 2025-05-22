@@ -6,7 +6,7 @@ from utils.authutils import auth_middleware
 from utils.responseutils import api_response
 from utils.logutils import log_error, log_info
 import time
-from apiendpoints.auth import validate_password
+from utils.authutils import validate_password # Changed import
 
 password_bp = Blueprint('password', __name__)
 
