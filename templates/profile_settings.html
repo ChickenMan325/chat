@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Settings</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='auth.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='profile_settings.css') }}">
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Flash message container -->
+    <div id="flash-message" class="flash-message">
+        <i id="flash-icon" class="fas"></i>
+        <div class="message-content" id="flash-content"></div>
+        <button class="close-btn" onclick="closeFlash()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="auth-container">
+        <div class="auth-card profile-settings-card">
+            <header class="settings-header">
+                <a href="/dashboard" class="back-link" title="Back to Dashboard">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <div class="header-content">
+                    <h2>Profile Settings</h2>
+                    <div class="current-username">{{ current_user.username }}</div>
+                </div>
+                <div class="header-spacer"></div>
+            </header>
+            
+            <div class="settings-tabs">
+                <button class="tab-btn active" data-tab="profile-tab">Profile Picture</button>
+                <button class="tab-btn" data-tab="username-tab">Username</button>
+                <button class="tab-btn" data-tab="password-tab">Password</button>
+            </div>
+            
+            <div class="tab-content">
+                <div id="profile-tab" class="tab-pane active">
+                    <div class="settings-container">
+                        <div class="settings-title">Profile Picture</div>
+                        <div class="profile-picture-container">
+                            <div class="profile-picture-preview" id="current-profile-picture">
+                                {% if current_user.profile_picture %}
+                                <img src="{{ url_for('static', filename=current_user.profile_picture) }}" alt="Profile Picture">
+                                {% else %}
+                                <i class="fas fa-user"></i>
+                                {% endif %}
+                            </div>
+                            <form id="profile-picture-form" enctype="multipart/form-data">
+                                <label for="profile-picture" class="profile-picture-label">
+                                    Choose New Picture
+                                </label>
+                                <input type="file" id="profile-picture" name="profile_picture" class="profile-picture-input" accept="image/png, image/jpeg, image/webp">
+                                <button type="submit" class="btn primary">
+                                    <i class="fas fa-save"></i> Update Profile Picture
+                                </button>
+                            </form>
+                            <div id="profile-picture-success" class="success-message">
+                                <i class="fas fa-check-circle"></i> Profile picture updated successfully!
+                            </div>
+                            <div id="profile-picture-error" class="error-message"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="username-tab" class="tab-pane">
+                    <div class="settings-container">
+                        <div class="settings-title">Change Username</div>
+                        <form id="username-form">
+                            <div class="form-group">
+                                <label for="new-username">New Username</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" id="new-username" name="new-username" placeholder="Enter new username" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn primary">
+                                <i class="fas fa-save"></i> Update Username
+                            </button>
+                            <div id="username-success" class="success-message">
+                                <i class="fas fa-check-circle"></i> Username updated successfully!
+                            </div>
+                            <div id="username-error" class="error-message"></div>
+                        </form>
+                    </div>
+                </div>
+                
+                <div id="password-tab" class="tab-pane">
+                    <div class="settings-container">
+                        <div class="settings-title">Change Password</div>
+                        <form id="password-form">
+                            <div class="password-form-grid">
+                                <div class="form-group">
+                                    <label for="current-password">Current Password</label>
+                                    <div class="input-with-icon">
+                                        <i class="fas fa-lock"></i>
+                                        <input type="password" id="current-password" name="current-password" placeholder="Enter current password" required>
+                                        <button type="button" class="toggle-password" tabindex="-1">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="new-password">New Password</label>
+                                    <div class="input-with-icon">
+                                        <i class="fas fa-key"></i>
+                                        <input type="password" id="new-password" name="new-password" placeholder="Enter new password" required>
+                                        <button type="button" class="toggle-password" tabindex="-1">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                    <div class="password-strength-meter">
+                                        <div class="strength-bar"></div>
+                                    </div>
+                                    <div class="password-hint">Password must be at least 6 characters</div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirm-password">Confirm New Password</label>
+                                    <div class="input-with-icon">
+                                        <i class="fas fa-key"></i>
+                                        <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm new password" required>
+                                        <button type="button" class="toggle-password" tabindex="-1">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn primary">
+                                <i class="fas fa-save"></i> Update Password
+                            </button>
+                            <div id="password-success" class="success-message">
+                                <i class="fas fa-check-circle"></i> Password updated successfully!
+                            </div>
+                            <div id="password-error" class="error-message"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='auth.js') }}"></script>
+    <script src="{{ url_for('static', filename='banpacket.js') }}"></script>
+    <script src="{{ url_for('static', filename='profile_settings.js') }}"></script>
+    <script src="/static/csrf.js"></script>
+</body>
+</html>

@@ -1,0 +1,519 @@
+/* Profile Settings CSS */
+:root {
+    --primary-color: #4a6cf7;
+    --secondary-color: #6c757d;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --light-color: #f8f9fa;
+    --dark-color: #343a40;
+    --body-bg: #f5f8fa;
+    --card-bg: #ffffff;
+    --border-color: #e1e5eb;
+    --text-color: #333;
+    --text-muted: #6c757d;
+}
+
+body {
+    background-color: var(--body-bg);
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Profile Settings Card */
+.profile-settings-card {
+    width: 100%;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+}
+
+/* Mobile-first design (phone-shaped) */
+@media (max-width: 767px) {
+    .profile-settings-card {
+        max-width: 450px;
+        margin: 0 auto;
+    }
+    
+    .auth-container {
+        padding: 10px;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+    }
+}
+
+/* Desktop layout (full screen) */
+@media (min-width: 768px) {
+    .auth-container {
+        max-width: 100%;
+        padding: 0;
+    }
+    
+    .profile-settings-card {
+        max-width: 100%;
+        min-height: 100vh;
+        border-radius: 0;
+    }
+    
+    .tab-content {
+        padding: 40px;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+    
+    .settings-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .form-group {
+        width: 100%;
+    }
+    
+    /* Password form grid layout for desktop */
+    .password-form-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 25px;
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    @media (min-width: 992px) {
+        .password-form-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+        
+        .password-form-grid .form-group:first-child {
+            grid-column: 1 / -1;
+        }
+    }
+}
+
+/* Header */
+.settings-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Mobile-first design (phone-shaped) */
+@media (max-width: 767px) {
+    .settings-header {
+        border-radius: 12px 12px 0 0;
+    }
+}
+
+/* Desktop layout (full screen) */
+@media (min-width: 768px) {
+    .settings-header {
+        border-radius: 0;
+        padding: 15px 40px;
+    }
+}
+
+.settings-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.back-link {
+    color: white;
+    font-size: 1.2rem;
+    transition: transform 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+}
+
+.back-link:hover {
+    transform: translateX(-3px);
+}
+
+.header-spacer {
+    width: 30px;
+}
+
+.header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+}
+
+/* Current username display */
+.current-username {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-top: 3px;
+}
+
+/* Tabs */
+.settings-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border-color);
+    background-color: #f8f9fa;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 15px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: all 0.3s;
+    position: relative;
+}
+
+.tab-btn:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--primary-color);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+}
+
+.tab-btn.active {
+    color: var(--primary-color);
+}
+
+.tab-btn.active:after {
+    transform: scaleX(1);
+}
+
+.tab-btn:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+/* Tab Content */
+.tab-content {
+    padding: 20px;
+    background-color: white;
+}
+
+.tab-pane {
+    display: none;
+}
+
+.tab-pane.active {
+    display: block;
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Settings Container */
+.settings-container {
+    margin-bottom: 20px;
+}
+
+.settings-title {
+    font-weight: 600;
+    margin-bottom: 25px;
+    color: var(--dark-color);
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+/* Form Styling */
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-color);
+    text-align: center;
+}
+
+.input-with-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.input-with-icon i {
+    position: absolute;
+    left: 12px;
+    color: var(--text-muted);
+}
+
+.input-with-icon input {
+    width: 100%;
+    padding: 12px 12px 12px 40px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+.input-with-icon input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.2);
+    outline: none;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    z-index: 2;
+}
+
+.toggle-password:hover {
+    color: var(--primary-color);
+}
+
+/* Password Strength Meter */
+.password-strength-meter {
+    height: 4px;
+    background-color: #e1e5eb;
+    margin-top: 8px;
+    border-radius: 2px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.strength-bar {
+    height: 100%;
+    width: 0;
+    transition: width 0.3s, background-color 0.3s;
+}
+
+.password-hint {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 5px;
+    text-align: center;
+}
+
+/* Profile Picture Styling */
+.profile-picture-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.profile-picture-preview {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 3px solid var(--border-color);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-picture-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-picture-preview i {
+    font-size: 60px;
+    color: var(--text-muted);
+}
+
+.profile-picture-input {
+    display: none;
+}
+
+.profile-picture-label {
+    cursor: pointer;
+    padding: 10px 16px;
+    background-color: var(--light-color);
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s;
+    margin-bottom: 15px;
+    display: inline-block;
+    text-align: center;
+}
+
+.profile-picture-label:hover {
+    background-color: #e2e6ea;
+    transform: translateY(-2px);
+}
+
+#profile-picture-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+/* Buttons */
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 100%;
+    max-width: 250px;
+    margin: 20px auto 0;
+}
+
+.btn i {
+    font-size: 0.9em;
+}
+
+.btn.primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn.primary:hover {
+    background-color: #3a5bd9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn.secondary {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.btn.secondary:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Success and Error Messages */
+.success-message, .error-message {
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 15px;
+    display: none !important; /* Force hide by default */
+    animation: fadeIn 0.3s;
+    transition: opacity 0.3s ease;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.error-message:before {
+    content: '\f06a';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+}
+
+/* Flash message styling */
+.flash-message {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 15px;
+    text-align: center;
+    color: white;
+    z-index: 1000;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.flash-message.show {
+    transform: translateY(0);
+}
+
+.flash-error {
+    background-color: #dc3545;
+}
+
+.flash-success {
+    background-color: #28a745;
+}
+
+.flash-message i {
+    font-size: 1.2rem;
+}
+
+.flash-message .message-content {
+    flex-grow: 1;
+    max-width: 800px;
+}
+
+.flash-message .close-btn {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 1.2rem;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+.flash-message .close-btn:hover {
+    opacity: 1;
+}
