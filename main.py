@@ -108,18 +108,9 @@ def profile_settings():
     
     return redirect(url_for('login'))
 
-@app.route('/api/user/me', methods=['GET'])
-def get_current_user():
-    user = get_current_user()
-    if user:
-        return api_response(True, data={
-            'user': {
-                'username': user['username'],
-                'is_admin': user.get('is_admin', False)
-            }
-        })
-    
-    return api_response(False, 'Unauthorized', status_code=401)
+# Removed conflicting get_current_user API endpoint. 
+# The endpoint /api/user/me is handled by user_bp in apiendpoints/user.py
+# The utility function get_current_user is imported from utils.sessionutils
 
 @app.route('/api/auth/logout', methods=['POST'])
 def logout():
