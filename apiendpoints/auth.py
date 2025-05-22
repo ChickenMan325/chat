@@ -4,7 +4,8 @@ from werkzeug.security import generate_password_hash
 import time
 import re
 from utils.pfputils import save_profile_picture
-from utils.authutils import invalidate_user_session, admin_required, api_response
+from utils.authutils import admin_required, api_response, validate_username, validate_password # Added validate_username, validate_password
+from utils.sessionutils import invalidate_session # Added import
 from utils.userutils import load_users, save_users, get_user, update_user
 from utils.auth_manager import authenticate_user, login_user, logout_user
 from utils.ratelimit import login_limiter
@@ -13,34 +14,7 @@ from utils.decorators import api_error_handler, require_fields
 
 auth_bp = Blueprint('auth', __name__)
 
-def validate_username(username):
-    """Validate username against security requirements"""
-    if not username or not isinstance(username, str):
-        return False, "Username must be a non-empty string"
-    
-    if len(username) < 3:
-        return False, "Username must be at least 3 characters long"
-    
-    if not re.match(r'^[a-zA-Z0-9_]+$', username):
-        return False, "Username can only contain letters, numbers, and underscores"
-    
-    return True, None
-
-def validate_password(password):
-    """Validate password against security requirements"""
-    if not password or not isinstance(password, str):
-        return False, "Password must be a non-empty string"
-    
-    if len(password) < 6:
-        return False, "Password must be at least 6 characters long"
-    
-    if not any(char.isdigit() for char in password):
-        return False, "Password must contain at least one number"
-    
-    if not any(char.isalpha() for char in password):
-        return False, "Password must contain at least one letter"
-    
-    return True, None
+# Removed validate_username and validate_password function definitions
 
 @auth_bp.route('/login', methods=['POST'])
 @api_error_handler
@@ -134,5 +108,5 @@ def force_logout():
     if not target_user:
         return api_response(False, 'User not found', status_code=404)
     
-    invalidate_user_session(target_user_id)
+    invalidate_session(target_user_id) # Changed to invalidate_session
     return api_response(True, 'User forced to logout')

@@ -21,7 +21,7 @@ def api_error_handler(f):
             return f(*args, **kwargs)
         except Exception as e:
             log_error(f"Error in {f.__name__}: {str(e)}")
-            from utils.authutils import api_response
+            from utils.responseutils import api_response
             return api_response(False, 'An error occurred while processing your request', status_code=500)
     return decorated
 
@@ -39,7 +39,7 @@ def require_fields(*fields):
         @wraps(f)
         def decorated(*args, **kwargs):
             from flask import request
-            from utils.authutils import api_response
+            from utils.responseutils import api_response
             
             data = request.get_json()
             

@@ -7,7 +7,7 @@ from utils.authutils import auth_middleware, api_response
 from utils.decorators import api_error_handler
 from utils.logutils import log_info, log_error
 from utils.sessionutils import emit_to_user
-from apiendpoints.auth import validate_username
+from utils.authutils import validate_username # Changed import
 
 user_bp = Blueprint('user', __name__)
 
